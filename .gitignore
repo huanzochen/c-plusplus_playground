@@ -1,4 +1,4 @@
-# ignore files with no extension
+# ignore files with no extension in basics
 basics/*
 !basics/*.cpp
 
