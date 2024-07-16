@@ -1,3 +1,7 @@
+# ignore files with no extension
+basics/*
+!basics/*.cpp
+
 # Prerequisites
 *.d
 
