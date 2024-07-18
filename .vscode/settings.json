@@ -65,6 +65,19 @@
     "format": "cpp",
     "text_encoding": "cpp",
     "thread": "cpp",
-    "cinttypes": "cpp"
+    "cinttypes": "cpp",
+    "__debug": "cpp",
+    "__errc": "cpp",
+    "__hash_table": "cpp",
+    "__mutex_base": "cpp",
+    "__node_handle": "cpp",
+    "__split_buffer": "cpp",
+    "complex": "cpp",
+    "sstream": "cpp",
+    "__bits": "cpp",
+    "__nullptr": "cpp",
+    "__string": "cpp",
+    "__tuple": "cpp",
+    "chrono": "cpp"
   }
 }
