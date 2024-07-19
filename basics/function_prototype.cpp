@@ -2,7 +2,7 @@
 
 using namespace std;
 
-// Function prototype
+// Function prototype, it can be put in .h files. Header files.
 double area_of_circle(double);
 double calc_area_circle(double radius);
 void sayHello();
