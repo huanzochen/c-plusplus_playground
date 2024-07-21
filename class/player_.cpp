@@ -62,16 +62,16 @@ int main()
 
   delete enemy;
 
-  Player *tommy{new Player};
-  tommy->name = "Tommy";
-  tommy->health = 999;
-  tommy->xp = 1000;
+  // Player *tommy{new Player};
+  // tommy->name = "Tommy";
+  // tommy->health = 999;
+  // tommy->xp = 1000;
 
-  tommy->talk("Hi there");
+  // tommy->talk("Hi there");
 
-  cout << "Tommy.health:" << tommy->health << endl;
+  // cout << "Tommy.health:" << tommy->health << endl;
 
-  cout << "hello world!" << endl;
+  // cout << "hello world!" << endl;
 
   return 0;
 }
