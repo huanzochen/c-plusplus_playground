@@ -6,6 +6,7 @@ using namespace std;
 
 class Player
 {
+public:
   // attributes
   // string name;
   // int health;
@@ -17,12 +18,13 @@ class Player
   int xp{100};
 
   // methods
-  void talk(string text_to_say);
+  void talk(string textToSay) { cout << name << " says: " << textToSay << endl; }
   bool isdead();
 };
 
 class Account
 {
+public:
   // attributes
   // string name;
   // double balance;
@@ -41,6 +43,15 @@ int main()
   Player frank;
   Player hero;
 
+  frank.name = "Frank";
+  frank.health = 110;
+  frank.xp = 1500;
+
+  frank.talk("Hello, I'm Frank!");
+
+  cout << frank.name << endl;
+  cout << "frank.health: " << frank.health << endl;
+
   Player players[]{frank, hero};
 
   vector<Player> player_vec{frank};
@@ -50,6 +61,15 @@ int main()
   enemy = new Player;
 
   delete enemy;
+
+  Player *tommy{new Player};
+  tommy->name = "Tommy";
+  tommy->health = 999;
+  tommy->xp = 1000;
+
+  tommy->talk("Hi there");
+
+  cout << "Tommy.health:" << tommy->health << endl;
 
   cout << "hello world!" << endl;
 
