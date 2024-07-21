@@ -1,10 +1,14 @@
-# Ignore files with no extensions
+# Ignore all files without an extension
 *.
+*/*
+*/*/*
+*/*/*/*
+*/*/*/*/*
 
-# Ignore files with no extensions at the top level
-*/*.
+# Do not ignore directories, so we can traverse into them
+!*/
 
-# Include *.cpp and *.h files
+# Include only *.cpp and *.h files
 !*.cpp
 !*.h
 
