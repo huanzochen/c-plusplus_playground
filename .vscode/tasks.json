@@ -11,7 +11,7 @@
 				"-g",
 				"${fileDirname}/*.cpp",
 				"-o",
-				"${workspaceFolder}/player/main"
+				"${fileDirname}/main"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
