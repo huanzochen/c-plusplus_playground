@@ -27,15 +27,22 @@ public:
   }
 
   // Overload Constructors
-  Player()
+
+  // This formay is the constructor initialization lists
+  Player() : name{0}, health{0}, xp{0}
   {
     cout << "No args constructor called" << endl;
   }
-  Player(string name_val) : name{name_val}
+  Player(string name_val) : name{name_val}, health{0}, xp{0}
   {
     cout << "String arg construtor called" << endl;
   }
-  Player(string name_val, int health, int xp) : name{name_val}
+  // Player(string name)
+  // {
+  //   this->name = name;
+  //   cout << "String arg construtor called" << endl;
+  // }
+  Player(string name_val, int health, int xp) : name{name_val}, health{health}, xp{xp}
   {
     cout << "3 args constructor called" << endl;
   }
