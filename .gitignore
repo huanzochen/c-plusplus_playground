@@ -1,6 +1,15 @@
-# ignore files with no extension in basics
-basics/*
-!basics/*.cpp
+# Ignore files with no extensions
+*.
+
+# Ignore files with no extensions at the top level
+*/*.
+
+# Include *.cpp and *.h files
+!*.cpp
+!*.h
+
+# Ignore everything within .dSYM directories
+*.dSYM/
 
 # Prerequisites
 *.d
