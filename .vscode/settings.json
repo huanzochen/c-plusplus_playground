@@ -79,5 +79,6 @@
     "__string": "cpp",
     "__tuple": "cpp",
     "chrono": "cpp"
-  }
+  },
+  "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
