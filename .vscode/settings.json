@@ -78,7 +78,8 @@
     "__nullptr": "cpp",
     "__string": "cpp",
     "__tuple": "cpp",
-    "chrono": "cpp"
+    "chrono": "cpp",
+    "unordered_set": "cpp"
   },
   "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }

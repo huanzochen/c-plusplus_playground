@@ -60,4 +60,8 @@ int main()
   printAll(&seen);
   printAll(&company);
 
+  unordered_set<int> lotto_6_number{2,3,5,45,21,12};
+
+  // This line is not ok due to the type is not same.
+  // lotto_6_number.swap(seen);
 }
