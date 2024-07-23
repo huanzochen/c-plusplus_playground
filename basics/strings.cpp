@@ -15,6 +15,7 @@ int main()
 
   string bmw = "BMW";
   cout << "bmw[1]: " << bmw[1] << endl;
+  cout << "bmw.length: " << bmw.length() << endl;
 
   return 0;
 }
