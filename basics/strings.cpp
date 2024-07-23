@@ -13,5 +13,8 @@ int main()
     cout << "Number of cars: " << cars[i] << std::endl;
   }
 
+  string bmw = "BMW";
+  cout << "bmw[1]: " << bmw[1] << endl;
+
   return 0;
 }
