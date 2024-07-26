@@ -37,7 +37,13 @@ public:
     cout << "Three args construtors called." << endl;
   }
 
-  Player(const Player &source) : name{source.name}, health(source.health), xp{source.xp}
+  // Player(const Player &source) : name{source.name}, health(source.health), xp{source.xp}
+  // {
+  //   cout << "Copy Constructor - made copy of: " << source.name << endl;
+  // }
+
+  // delegating
+  Player(const Player &source) : Player{source.name, source.health, source.xp}
   {
     cout << "Copy Constructor - made copy of: " << source.name << endl;
   }
