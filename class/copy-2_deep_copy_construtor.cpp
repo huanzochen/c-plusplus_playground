@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -48,7 +49,7 @@ Deep::Deep(int d)
 // delegating
 Deep::Deep(const Deep &source) : Deep{*source.data}
 {
-  cout << "Copy constructor - deep copy" << endl;
+  cout << "Copy constructor - deep copy:" << *data << endl;
 }
 
 Deep::~Deep()
@@ -66,4 +67,14 @@ int main()
 {
   Deep obj1{100};
   display_shallow(obj1);
+
+  vector<Deep> vec;
+
+  vec.push_back(Deep{10});
+
+  vec.push_back(Deep{20});
+  vec.push_back(Deep{30});
+  vec.push_back(Deep{40});
+
+  vec.push_back(Deep{50});
 }
