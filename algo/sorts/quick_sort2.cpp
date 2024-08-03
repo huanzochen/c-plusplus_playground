@@ -3,12 +3,9 @@
 
 using namespace std;
 
-int main()
+void printVec(vector<int> &vec)
 {
-  vector<int> vec{2, 3, 5, 62, 1, 3, 56, 8, 82, 3};
-
-  quicksort(vec);
-
+  // cout << "printVec=================" << endl;
   for (int i = 0; i < vec.size(); i++)
   {
     int cur = vec[i];
@@ -18,11 +15,54 @@ int main()
       cout << ", ";
     }
   }
+  cout << endl;
+}
+
+void swap(int &a, int &b)
+{
+  int temp = a;
+  a = b;
+  b = temp;
 }
 
 int partition(vector<int> &vec, int lo, int hi)
 {
-  return 0;
+  int pivot = vec[lo];
+  // i, j 定義為開區間, 同時定義
+  // [lo, i) <= pivot; (j, hi] > pivot
+  // 之後都要正確維護這個邊界區間的定義
+
+  int i = lo + 1; // lo 已經被取成 pivot 吧, 所以是 lo + 1
+  int j = hi;
+
+  while (i <= j)
+  {
+
+    while (i < hi && vec[i] <= pivot)
+    {
+      i++;
+      // 此 while 結束時剛好 vec[i] > pivot
+    }
+    while (j > lo && vec[j] > pivot)
+    {
+      j--;
+      // 此 while 結束時恰好 vec[j] <= pivot
+    }
+
+    if (i >= j)
+    {
+      break;
+    }
+
+    // 此時 [lo, i) <= pivot && (j, hi] > pivot
+    // 交換 vec[j] 和 vec[i]
+    swap(vec[i], vec[j]);
+    // 此時 [lo, i] <= pivot && [j, hi] > pivot
+  }
+
+  swap(vec[lo], vec[j]);
+
+  return j;
 }
 
 // This is a recursive function, it will traverse through all the value.
@@ -46,5 +86,15 @@ void sort(vector<int> &vec, int lo, int hi)
 
 void quicksort(vector<int> &vec)
 {
+  // cout << "vec[4]: " << vec[4] << endl;
   sort(vec, 0, vec.size() - 1);
+}
+
+int main()
+{
+  vector<int> vec{2, 3, 5, 62, 1, 3, 56, 8, 82, 3};
+
+  quicksort(vec);
+
+  printVec(vec);
 }
