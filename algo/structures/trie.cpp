@@ -82,7 +82,7 @@ public:
     size--;
   }
 
-  TrieNode* remove(TrieNode *node, const string &key, int i)
+  TrieNode *remove(TrieNode *node, const string &key, int i)
   {
     // base case
     if (node == nullptr)
@@ -91,7 +91,8 @@ public:
     }
     if (i == key.size())
     {
-      node->val = nullptr;
+      node->val = V();           // Reset to default value
+      node->val.isValid = false; // Mark as inValid
     }
     else
     {
@@ -101,7 +102,7 @@ public:
     }
 
     // 後序位置，遞歸路上的節點可能需要被清理
-    if (node->val != nullptr)
+    if (node->val.isValid)
     {
       // 如果該 TrieNode 存儲著 val, 不需要被清理
       return node;
@@ -123,7 +124,7 @@ public:
   // 判斷 key 是否存在於 Map 中
   bool containsKey(string key)
   {
-    return get(key) != nullptr;
+    return get(key).isValid;
   }
 
   // 在 Map 所有鍵中搜索 query 的最短前綴
@@ -139,18 +140,21 @@ public:
         // 無法向下搜索
         return "";
       }
-      if (p->val != nullptr)
+      if (p->val.isValid)
       {
+        cout << endl
+             << "query: " << query << endl;
+        cout << "query[i]: " << query[i] << " i: " << i << endl;
         // 找到一個鍵是 query 的前綴
         return query.substr(0, i);
       }
       // 向下搜索
       char c = query[i];
-      p = p->children[c];
+      p = p->children[static_cast<unsigned char>(c)];
     }
 
     // 到了最後一個節點
-    if (p != nullptr && p->val != nullptr)
+    if (p != nullptr && p->val.isValid)
     {
       return query;
     }
@@ -162,16 +166,16 @@ public:
   string longestPrefixOf(string query)
   {
     TrieNode *p = root;
-    int max_len;
+    int max_len = 0;
     // 從解點 node 開始搜索 key
     for (int i = 0; i < query.size(); i++)
     {
       if (p == nullptr)
       {
         // 無法向下搜索
-        return "";
+        break;
       }
-      if (p->val != nullptr)
+      if (p->val.isValid)
       {
         // 找到一個是 query 的前綴的值
         max_len = i;
@@ -179,11 +183,11 @@ public:
 
       char c = query[i];
       // 因為 char 存在 index 裡（也就是樹枝上，所以這樣去訪問）
-      p = p->children[c];
+      p = p->children[static_cast<unsigned char>(c)];
     }
 
     // 最後，檢查 p 本身是不是一個鍵
-    if (p != nullptr || p->val != nullptr)
+    if (p != nullptr || p->val.isValid)
     {
       // 如果 query 本身就是一個鍵
       return query;
@@ -211,12 +215,13 @@ public:
   // 遍歷以 node 為根的所有值，找到所有鍵
   void traverse(TrieNode *x, string path, vector<string> &res)
   {
+    cout << "path: " << path << endl;
     if (x == nullptr)
     {
       // 到達葉子底部節點
       return;
     }
-    if (x->val != V())
+    if (x->val.isValid)
     {
       // 找到一個 key, 添加到 res 中
       res.push_back(path);
@@ -225,7 +230,7 @@ public:
     {
       // 做選擇
       path.push_back(c);
-      traverse(x->children[c], path, res);
+      traverse(x->children[static_cast<unsigned char>(c)], path, res);
       path.pop_back();
     }
   }
@@ -262,7 +267,7 @@ public:
     if (i == pattern.size())
     {
       // pattern 匹配完成
-      if (node->val != V())
+      if (node->val.isValid)
       {
         res.push_back(track);
       }
@@ -278,7 +283,7 @@ public:
       for (char j = 0; j < R; j++)
       {
         track.push_back(j);
-        traverseWithPattern(node->children[j], track, pattern, i, res);
+        traverseWithPattern(node->children[static_cast<unsigned char>(j)], track, pattern, i, res);
         track.pop_back();
       }
     }
@@ -313,7 +318,7 @@ public:
     {
       // pattern 走到頭了，看看匹配到的是否是一個鍵
       // 有可能會出現 true 的地方.
-      return root->val != nullptr;
+      return root->val.isValid;
     }
 
     char c = pattern[i];
@@ -321,7 +326,7 @@ public:
     if (c != '.')
     {
       // 從 root->children[i] 開始繼續找 pattern[i+1..]
-      traverseHasKeyWithPattern(root->children[c], pattern, i + 1);
+      traverseHasKeyWithPattern(root->children[static_cast<unsigned char>(c)], pattern, i + 1);
     }
     // 大開殺戒了, 遍歷 256 個字元去尋找所有的可能性
     else if (c == '.')
@@ -361,7 +366,7 @@ public:
   {
     // 從 root 開始搜索 key
     TrieNode *x = getNode(root, key);
-    if (x == nullptr || x->val == V())
+    if (x == nullptr || x->val.isValid)
     {
       // x 為空或 x 的 val 字段都為空說明 key 沒有對應值
       return V();
@@ -396,11 +401,132 @@ public:
   };
 };
 
+// Define a struct to act as a placeholder
+struct Placeholder
+{
+  bool isValid;
+
+  Placeholder() : isValid(true) {}
+
+  bool operator==(const Placeholder &other) const
+  {
+    return this->isValid == other.isValid;
+  }
+};
+
+class TrieSet
+{
+private:
+  // 底層用一個 TrieMap, 鍵就是 TrieSet, 值僅作為 placeholder 的作用
+  // 值得類型可以隨便設置，樓主參考 java 標準庫設成 object.
+  TrieMap<Placeholder> map;
+
+public:
+  // **增**
+  void add(string &key)
+  {
+    map.put(key, Placeholder());
+  }
+
+  // **刪**
+  void remove(string key)
+  {
+    map.remove(key);
+  }
+
+  // **查**
+  // 判斷元素 key 是否存在集合中
+  bool contains(string &key)
+  {
+    return map.containsKey(key);
+  }
+
+  // 在集合中尋找 query 的最短前綴
+  string shortestPrefixOf(string query)
+  {
+    return map.shortestPrefixOf(query);
+  }
+
+  // 在集合中尋找 query 的最長前綴
+  string longestPrefixOf(string query)
+  {
+    return map.longestPrefixOf(query);
+  }
+
+  vector<string> keysWithPrefix(string prefix)
+  {
+    return map.keysWithPrefix(prefix);
+  }
+
+  // 判斷集合中是否存在前綴為 prefix 的元素
+  bool hasKeyWithPrefix(string prefix)
+  {
+    return map.hasKeyWithPrefix(prefix);
+  }
+
+  vector<string> keysWithPattern(string pattern)
+  {
+    return map.keysWithPattern(pattern);
+  }
+
+  // 通配符 . 匹配任意字符，判斷集合中是否存在匹配 pattern 的元素
+  bool hasKeyWithPattern(string pattern)
+  {
+    return map.hasKeyWithPattern(pattern);
+  }
+
+  // 返回集中元素的個數
+  int getsize()
+  {
+    return map.getSize();
+  }
+};
+
 int main()
 {
-  cout << "hello world!" << endl;
+  TrieSet trie;
 
-  TrieMap<int> trie;
+  string word1 = "apple";
+  string word2 = "app";
+  string word3 = "application";
+  string word4 = "bat";
+  string word5 = "batch";
+  string word6 = "batman";
+
+  trie.add(word1);
+  trie.add(word2);
+  trie.add(word3);
+  trie.add(word4);
+  trie.add(word5);
+  trie.add(word6);
+
+  string prefix1 = "app";
+  string prefix2 = "bat";
+  string prefix3 = "cat";
+
+  string pattern1 = "b.t";
+
+  cout << "Contains prefix '" << prefix1 << "': " << trie.hasKeyWithPrefix(prefix1) << endl;
+  cout << "Contains prefix '" << prefix2 << "': " << trie.hasKeyWithPrefix(prefix2) << endl;
+  cout << "Contains prefix '" << prefix3 << "': " << trie.hasKeyWithPrefix(prefix3) << endl;
+
+  cout << "hasKeyWithPrefix ====  " << endl;
+  vector<string> b = trie.keysWithPrefix("b");
+  for (int i = 0; i < b.size(); i++)
+  {
+    cout << b[i];
+    if (i != b.size() - 1)
+      cout << ", ";
+  }
+
+  cout
+      << "======" << endl;
+
+  cout
+      << "Contains pattern '" << pattern1 << "': " << trie.hasKeyWithPattern(pattern1) << endl;
+
+  cout << "shortestPrefixOf: " << trie.shortestPrefixOf(word6) << endl;
+  cout << "longestPrefixOf: " << trie.longestPrefixOf(word6) << endl;
 
   return 0;
 }
