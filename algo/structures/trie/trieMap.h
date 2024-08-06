@@ -1,38 +1,19 @@
-#include <iostream>
-#include <string>
+#ifndef TRIEMAP_H
+#define TRIEMAP_H
 
-using namespace std;
+#include <string>
+#include "trieNode.h"
 
 template <typename V>
 class TrieMap
 {
 private:
-  // ASCII character count
+// ASCII character count
   static const int R = 256;
-  // Number of key value pairs in the map
   int size = 0;
 
-
-  // 這是一個被動的資料結構，所以用 struct.
-  struct TrieNode
-  {
-    V val;
-    array<TrieNode*, 256> children;
-
-    // Constructor
-    TrieNode(): val(V()){
-      children.fill(nullptr);
-    }
-
-    ~TrieNode(){
-      for(TrieNode* child: children){
-        delete child;
-      }
-    }
-  };
-
   // Root node of the Trie
-  TrieNode *root = nullptr;
+  TrieNode<V> *root = nullptr;
 
 public:
   // 在 Map 中添加 key
@@ -77,7 +58,7 @@ public:
   bool hasKeyWithPattern(string pattern);
 
   // 返回 Map 鍵值對數量
-  int getSize() const {
-    return size;
-  }
+  int getSize();
 };
+
+#endif // TRIEMAP_H
