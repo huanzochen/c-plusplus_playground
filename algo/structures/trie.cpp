@@ -40,13 +40,91 @@ public:
   TrieNode *root = nullptr;
 
   // 在 Map 中添加 key
-  void put(string key, V val);
+  void put(string key, V val)
+  {
+    if (!containsKey(key))
+    {
+      // 新增建值對
+      size++;
+    }
+    // 需要一個額外的輔助函數，並接收其返回值
+    root = put(root, key, val, 0);
+  }
+
+  TrieNode *put(TrieNode *node, const string &key, V val, int i)
+  {
+    if (node == nullptr)
+    {
+      // 如果樹枝不存在，則新建
+      node = new TrieNode();
+    }
+    if (i == key.size())
+    {
+      // key 的路徑已經插入完成，將值 val 存入節點
+      node->val = val;
+      return node;
+    }
+    char c = key[i];
+    // 遞歸插入子節點，並接收他的返回值
+    node->children[static_cast<unsigned char>(c)] = put(node->children[static_cast<unsigned char>(c)], key, val, i + 1);
+
+    return node;
+  }
 
   // 刪除 key 以及對應的值
-  void remove(string key);
+  void remove(string key)
+  {
+    if (!containsKey(key))
+    {
+      return;
+    }
+    root = remove(root, key, 0);
+    size--;
+  }
+
+  TrieNode* remove(TrieNode *node, const string &key, int i)
+  {
+    // base case
+    if (node == nullptr)
+    {
+      return nullptr;
+    }
+    if (i == key.size())
+    {
+      node->val = nullptr;
+    }
+    else
+    {
+      char c = key[i];
+      // 遞歸去子樹進行刪除
+      node->children[c] = remove(node->children[c], key, i + 1);
+    }
+
+    // 後序位置，遞歸路上的節點可能需要被清理
+    if (node->val != nullptr)
+    {
+      // 如果該 TrieNode 存儲著 val, 不需要被清理
+      return node;
+    }
+    // 檢查該 node children 是否有東西，也就是是否有後綴
+    for (int c = 0; c < R; c++)
+    {
+      if (node->children[c] != nullptr)
+      {
+        // 只要存在一個子節點 (後綴樹枝)，就不需要被清理
+        return node;
+      }
+    }
+
+    // 既沒有存儲 val, 也沒有後綴樹枝，則該節點需要被清理
+    return nullptr;
+  }
 
   // 判斷 key 是否存在於 Map 中
-  bool containsKey(string key);
+  bool containsKey(string key)
+  {
+    return get(key) != nullptr;
+  }
 
   // 在 Map 所有鍵中搜索 query 的最短前綴
   // shortestPrefixOf(string query)
@@ -217,7 +295,58 @@ public:
   // 通配符 . 匹配任意字符，判斷是否存在匹配的鍵
   // hasKeyWithPattern(".ip") -> true
   // hasKeyWithPattern(".i") -> false
-  bool hasKeyWithPattern(string pattern);
+  bool hasKeyWithPattern(string pattern)
+  {
+    return traverseHasKeyWithPattern(root, pattern, 0);
+  }
+
+  // 函數定義： 從 node 節點開始匹配 pattern[i...], 返回是否成功匹配
+  bool traverseHasKeyWithPattern(TrieNode *root, string pattern, int i)
+  {
+    // base case
+    if (root == nullptr)
+    {
+      // 樹枝不存在, 匹配失敗
+      return false;
+    }
+    if (i == pattern.size())
+    {
+      // pattern 走到頭了，看看匹配到的是否是一個鍵
+      // 有可能會出現 true 的地方.
+      return root->val != nullptr;
+    }
+
+    char c = pattern[i];
+    // 沒有遇到通配符的情況
+    if (c != '.')
+    {
+      // 從 root->children[i] 開始繼續找 pattern[i+1..]
+      traverseHasKeyWithPattern(root->children[c], pattern, i + 1);
+    }
+    // 大開殺戒了, 遍歷 256 個字元去尋找所有的可能性
+    else if (c == '.')
+    {
+      for (int i = 0; i < R; i++)
+      {
+        if (traverseHasKeyWithPattern(root->children[i], pattern, i + 1))
+        {
+          // 只要其中一個有 true, 就 return true.
+          return true;
+        }
+      }
+    }
+    else
+    {
+      cout << "traverseHasKeyWithPattern - It should not be here." << endl;
+    }
+    // 都沒有匹配.
+    return false;
+  }
+
+  // 這是一個偷懶的實現
+  // bool hasKeyWithPattern(string pattern){
+  //   return !keyWithPattern(pattern);
+  // }
 
   // 返回 Map 鍵值對數量
   int getSize() const
