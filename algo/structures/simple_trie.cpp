@@ -6,6 +6,8 @@ using namespace std;
 struct TrieNode
 {
 private:
+  static const int ALPHABETS_SIZE{26};
+
   // pointer array for child nodes of each node
   TrieNode *childNode[26];
 
@@ -47,12 +49,50 @@ public:
         // Keep the reference for the newly created node.
         currentNode->childNode[c - 'a'] = newNode;
       }
+
+      // Move to the next node to save another char.
+      currentNode = currentNode->childNode[c - 'a'];
+    }
+  }
+
+  bool getWordEnd()
+  {
+    return this->wordEnd;
+  }
+
+  void print_current_child(TrieNode *node)
+  {
+    cout << "node->children[26]: ";
+    for (int i = 0; i < ALPHABETS_SIZE; i++)
+    {
+      cout << endl << "i: " << i << " ";
+      if (node->childNode[i] != nullptr)
+      {
+        // 如果這個值是 false, 代表該字串不在尾端
+        // true 是在尾端
+        cout << node->childNode[i] << " : " << node->childNode[i]->getWordEnd();
+      }
+      else
+      {
+        cout << node->childNode[i];
+      }
+      if (i != ALPHABETS_SIZE - 1)
+        cout << ", ";
     }
   }
 };
 
 int main()
 {
+  TrieNode *node = new TrieNode;
+
+  string one = "that";
+
+  node->insert_key(node, one);
+
+  cout << "node->getWordEnd(): " << node->getWordEnd() << endl;
+
+  node->print_current_child(node);
 
   return 0;
 }
