@@ -5,6 +5,9 @@
 
 using namespace std;
 
+//https://cplusplus.com/reference/map/map/
+// map is implemented by binary search tree.
+
 int main()
 {
   map<string, int> ageOfPeople = {{"Tommy", 10},
