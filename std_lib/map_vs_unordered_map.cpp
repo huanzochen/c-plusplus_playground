@@ -38,37 +38,4 @@ int main()
   {
     std::cout << "upper than 10, " << itupper->first << ": " << itupper->second << std::endl;
   }
-
-  // 選定的 value <= element，第一個大於等於他的數值.
-  map<int, string>::iterator lowerBound = orderedNames.lower_bound(15);
-  if (lowerBound != orderedNames.end())
-  {
-    cout << "lowerBound of 15 is: " << lowerBound->first;
-  }
-  cout << endl;
-
-  // 選定的 value < element(陣列中的元素), 第一個大於他的數值.
-  map<int, string>::iterator upperBound = orderedNames.upper_bound(15);
-  if (upperBound != orderedNames.end())
-  {
-    cout << "upperBound of 16 is: " << upperBound->second;
-  }
-  cout << endl;
-
-  map<int, int> calendar{{14, 17}, {15, 20}};
-
-  pair<int, int> newDate = {10, 16};
-  map<int, int>::iterator later = calendar.upper_bound(newDate.second);
-
-  if (later != calendar.end())
-  {
-    cout << "the upperbound of newDate {10, 16} in the calendar is: " << later->first << ", " << later->second << endl;
-  }
-
-  pair<int, int> anotherDate = {9, 13};
-  auto later2 = calendar.upper_bound(anotherDate.second);
-  if (later2 != calendar.end())
-  {
-    cout << "the upperbound of newDate {9, 13} in the calendar is: " << later2->first << ", " << later2->second << endl;
-  }
 }
