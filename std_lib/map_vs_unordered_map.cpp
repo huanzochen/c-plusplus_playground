@@ -38,4 +38,7 @@ int main()
   {
     std::cout << "upper than 10, " << itupper->first << ": " << itupper->second << std::endl;
   }
+
+  cout << "orderedNames.begin()->first: " << orderedNames.begin()->first << " " << "orderedNames.begin()->second: " << orderedNames.begin()->second << endl;
+  cout << "prev(orderedNames.end())->first: " << prev(orderedNames.end())->first << " prev(orderedNames.end())->second: " << prev(orderedNames.end())->second << endl;
 }
