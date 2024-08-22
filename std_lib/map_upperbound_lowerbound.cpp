@@ -25,25 +25,33 @@ int main()
   }
   cout << endl;
 
-  map<int, int> calendar{{14, 17}, {15, 20}};
+  map<int, int> calendar{{14, 17}, {15, 20}, {19, 80}};
 
   pair<int, int> newDate = {10, 16};
   map<int, int>::iterator later = calendar.upper_bound(newDate.second);
 
   if (later != calendar.end())
   {
-    cout << "the upperbound of newDate {10, 16} in the calendar is: " << later->first << ", " << later->second << endl;
+    cout << "the upper_bound of newDate {10, 16} in the calendar is: " << later->first << ", " << later->second << endl;
   }
 
-  pair<int, int> anotherDate = {9, 13};
+  pair<int, int> anotherDate = {9, 16};
   auto later2 = calendar.upper_bound(anotherDate.second);
 
-  if (later2 == calendar.begin())
+  if (later2 != calendar.begin())
   {
     cout << "begin means this iterator is the first result" << endl;
     cout << "begin, the upperbound of newDate {9, 13} in the calendar is: " << later2->first << ", " << later2->second << endl;
 
     // what will happen minus the iterator
-    cout << "(--later2)->first " << (--later2)->first << ", " << "(--later2)->second: " << (--later2)->second << endl;
+    cout << "(later2)->first " << (later2)->first << endl;
+    cout << "(--later2)->first " << (--later2)->first << endl;
+    cout << "(--later2)->first " << (--later2)->first << endl;
+    // 撿到第一個 it 之後就不知道在幹嘛了
+    cout << "(--later2)->first " << (--later2)->first << endl;
+    cout << "(later2)->second: " << (later2)->second << endl;
+    cout << "(--later2)->second: " << (--later2)->second << endl;
+    cout << "(--later2)->second: " << (--later2)->second << endl;
+    cout << "(--later2)->second: " << (--later2)->second << endl;
   }
 }
