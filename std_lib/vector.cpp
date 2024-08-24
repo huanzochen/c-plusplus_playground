@@ -92,4 +92,13 @@ int main()
   // fill with 0 with the new field
   oneToTen2.resize(10, 0);
   printVec(oneToTen2);
+
+  // if I want the element which is in the postion of oneToTen[3] ~ oneToTen[5], that is 3 elements.
+  vector<int> subOneToTen2(oneToTen2.begin() + 3, oneToTen2.begin() + 3 + (5 - 3) + 1);
+  cout << "subOneToTen2.size(): " << subOneToTen2.size() << endl;
+  printVec(subOneToTen2);
+
+  vector<vector<int>>
+      preSum(2 + 1, vector<int>(3 + 1));
+  cout << preSum.size() << " " << preSum[0].size();
 }
