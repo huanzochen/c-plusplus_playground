@@ -45,8 +45,9 @@ uint32_t reverseNum(uint32_t n)
   {
     res = res << 1;
     res = res | (n&1);
-
+    n = n >> 1;
   }
+  return res;
 }
 
 int main()
