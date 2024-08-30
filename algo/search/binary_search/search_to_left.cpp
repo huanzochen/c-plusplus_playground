@@ -33,7 +33,14 @@ int binary_search_left_close_right_open(vector<int> &nums, int target)
     }
   }
 
-  return l;
+  // 如果索引越界，說明目標中無該元素，返回 -1
+  // 其實，在這裡， l 不可能小於 0, 但保持索引不越界是個好習慣
+  if (l < 0 || l >= nums.size())
+  {
+    return -1;
+  }
+
+  return nums[l] == target ? l : -1;
 }
 
 int binary_search_left_close_right_close(vector<int> &nums, int target)
@@ -59,7 +66,12 @@ int binary_search_left_close_right_close(vector<int> &nums, int target)
       r = mid - 1;
     }
   }
-  return l;
+
+  if (l < 0 || l >= nums.size())
+  {
+    return -1;
+  }
+  return nums[l] == target ? l : -1;
 }
 
 int main()

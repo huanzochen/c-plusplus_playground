@@ -35,6 +35,12 @@ public:
 
         // 把這張牌堆放到堆頂
         top[left] = poker;
+
+        for(int i =0; i < top.size();i++){
+          cout << top[i];
+          if(i != top.size()-1) cout << ", ";
+        }
+        cout << endl;
       }
 
       return piles;

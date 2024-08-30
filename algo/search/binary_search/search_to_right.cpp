@@ -14,6 +14,7 @@ int binary_search_left_close_right_open(vector<int> &nums, int target)
   int l = 0;
   int r = nums.size();
 
+  // l == r 的時候會停止，所以 l 和 r 是一樣的
   while (l < r)
   {
     int mid = l + ((r - l) / 2);
@@ -32,7 +33,12 @@ int binary_search_left_close_right_open(vector<int> &nums, int target)
     }
   }
 
-  return r - 1;
+  if (r - 1 < 0 || r - 1 >= nums.size())
+  {
+    return -1;
+  }
+
+  return nums[r - 1] == target ? r - 1 : -1;
 }
 
 int binary_search_left_close_right_close(vector<int> &nums, int target)
@@ -42,6 +48,7 @@ int binary_search_left_close_right_close(vector<int> &nums, int target)
   int l = 0;
   int r = nums.size() - 1;
 
+  // l = r+1 的時候停止
   while (l <= r)
   {
     int mid = l + ((r - l) / 2);
@@ -61,7 +68,13 @@ int binary_search_left_close_right_close(vector<int> &nums, int target)
       r = mid - 1;
     }
   }
-  return r;
+
+  if (r < 0 || r > nums.size())
+  {
+    return -1;
+  }
+
+  return nums[r] == target ? r : -1;
 }
 
 int main()
