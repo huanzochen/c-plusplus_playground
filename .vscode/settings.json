@@ -81,7 +81,10 @@
     "chrono": "cpp",
     "unordered_set": "cpp",
     "numeric": "cpp",
-    "stop_token": "cpp"
+    "stop_token": "cpp",
+    "__tree": "cpp",
+    "deque": "cpp",
+    "map": "cpp"
   },
   "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
