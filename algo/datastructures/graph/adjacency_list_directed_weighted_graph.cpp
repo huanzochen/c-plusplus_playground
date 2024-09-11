@@ -81,6 +81,8 @@ public:
   bool hasEdge(int from, int to)
   {
     auto node = graph[from];
+
+    cout << "from: " << from << endl;
     for (auto e : node)
     {
       if (e.to == to)
@@ -117,9 +119,9 @@ public:
 
 int main()
 {
-  WeightedDigraph graph(3);
+  WeightedDigraph graph(4);
   graph.addEdge(0, 1, 1);
-  graph.addEdge(1, 2, 2);
+  graph.addEdge(1, 2, 99);
   graph.addEdge(2, 0, 3);
   graph.addEdge(2, 1, 4);
 
@@ -139,7 +141,16 @@ int main()
   // 2 -> 1, weight: 4
 
   graph.removeEdge(0, 1);
-  // cout << graph.hasEdge(0, 1) << endl; // false
+  cout << graph.hasEdge(0, 1) << endl; // false
+
+  cout << "graph.addEdge(10, 2, 111); " << endl;
+  graph.addEdge(10, 2, 111);
+
+  cout << graph.weight(1, 2) << endl;
+  cout << graph.hasEdge(10, 2) << endl;
+
+  graph.addEdge(5, 6, 10);
+  cout << graph.hasEdge(5, 5) << endl;
 
   // return 0;
 }
