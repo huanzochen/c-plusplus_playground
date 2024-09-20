@@ -59,7 +59,7 @@ vector<int> solution(vector<int> temp)
 
   vector<int> res;
 
-  for (int i = 0; i < static_cast<int>(temp.size()); i++)
+  for (size_t i = 0; i < temp.size(); i++)
   {
     int curTemp = temp[i];
 
