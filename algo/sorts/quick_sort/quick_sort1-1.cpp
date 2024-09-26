@@ -12,21 +12,23 @@ void swap(int &a, int &b)
 
 int pivot_helper(vector<int> &vec, int start, int end)
 {
-  int &pivot = vec[start];
+  int l = start;
+  int r = start + 1;
+
   int pivotIndex = start;
+  int pivot = vec[start];
 
-  for (size_t i = start + 1; i <= end; i++)
-  {
-    int &current = vec[i];
-    if (current < pivot)
-    {
-      pivotIndex++;
-
-      if (i != pivotIndex)
-        swap(current, vec[pivotIndex]);
+  while(r <= end){
+    if(vec[r] < pivot){
+      l++;
+      swap(vec[r], vec[l]);
     }
+    r++;
   }
-  swap(vec[start], vec[pivotIndex]);
+
+  swap(vec[pivotIndex], vec[l]);
+
+  pivotIndex = l;
 
   return pivotIndex;
 }
@@ -60,4 +62,5 @@ int main()
   {
     cout << *it << " ";
   }
+  cout << endl;
 }
