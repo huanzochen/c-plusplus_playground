@@ -52,7 +52,7 @@ int pivot_helper(vector<int> &vec, int start, int end)
 void quick_sort(vector<int> &vec, int left, int right)
 {
   // base case
-  if (left > right)
+  if (left >= right)
   {
     return;
   }
