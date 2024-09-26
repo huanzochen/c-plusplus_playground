@@ -22,12 +22,12 @@ int pivot_helper(vector<int> &vec, int start, int end)
 
   while (l <= r)
   {
-    while (l < end && vec[l] < pivot)
+    while (l <= end && vec[l] < pivot)
     {
       l++;
     }
 
-    while (r > start + 1 && vec[r] > pivot)
+    while (r >= start + 1 && vec[r] > pivot)
     {
       r--;
     }
@@ -67,7 +67,8 @@ void quick_sort(vector<int> &vec, int left, int right)
 
 int main()
 {
-  vector<int> testData{5, 8, 2, 1, 4, 3, 7, 6, 0};
+  vector<int> testData{1, 2, 3, 4, 5};
+  // vector<int> testData{5, 8, 2, 1, 4, 3, 7, 6, 0};
 
   cout << "unsorted result: ";
   for (const auto &i : testData)
