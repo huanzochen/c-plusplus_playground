@@ -19,68 +19,68 @@ I put the obstacles into a set. Then for every [2, x, size] instruction, I check
 
 using namespace std;
 
-//https://oi-wiki.org/ds/seg/
-class SegmentTree {
+class SegmentTree{
+    int n;
+    vector<int> tree;
 public:
-    SegmentTree(int n) : n(n) {
-        // tree.resize(2 * n, 0);
-        tree = vector<int>(2*n, 0);
+    SegmentTree(int n) : n(n){
+        tree.resize(2*n, 0);
     }
 
-    void update(int pos, int value) {
-        pos += n;
+    void update(int pos, int value){
+        pos+= n;
         tree[pos] = value;
-        while (pos > 1) {
-            pos /= 2;
-            tree[pos] = tree[2 * pos] + tree[2 * pos + 1];
+        while(pos > 1) {
+            pos /=2;
+            tree[pos] = tree[2*pos] + tree[2*pos +1];
         }
     }
 
-    int query(int left, int right) {
-        left += n;
-        right += n;
+    int query(int left, int right){
+        left+=n;
+        right+=n;
         int sum = 0;
-        while (left < right) {
-            if (left % 2 == 1) {
-                sum += tree[left];
+        while(left < right){
+            if(left%2 ==1){
+                sum+= tree[left];
                 left++;
             }
-            if (right % 2 == 1) {
+            if(right %2 == 1){
                 right--;
-                sum += tree[right];
+                sum+= tree[right];
             }
             left /= 2;
             right /= 2;
         }
         return sum;
     }
-
-private:
-    int n;
-    vector<int> tree;
 };
 
-string processInstructions(const vector<vector<int>>& instructions) {
-    int max_pos = 0;
-    for (const auto& instr : instructions) {
-        for (size_t i = 1; i < instr.size(); ++i) {
-            max_pos = max(max_pos, instr[i]);
+string processInstructions(vector<vector<int>> &instructions) {
+    int maxPos = 0;
+    for(vector<int> &instr: instructions){
+        int n = instr.size();
+        for(int i = 1; i < n;i++){
+            // 找出區間內最大的邊界在哪裡
+            maxPos = max(maxPos, instr[1]);
         }
     }
 
-    SegmentTree segTree(max_pos + 1);
+    // 線段樹實現
+    SegmentTree segTree(maxPos + 1);
     string result;
 
-    for (const auto& instr : instructions) {
-        if (instr[0] == 1) {
+    for(const auto & instr: instructions){
+        if(instr[0] == 1){
             segTree.update(instr[1], 1);
-        } else if (instr[0] == 2) {
+        } else if(instr[0] == 2){
             int x = instr[1];
-            int size = instr[2];
-            if (segTree.query(x, x + size) == 0) {
+            int sz = instr[2];
+
+            if(segTree.query(x, x + sz) == 0){
                 result += "1";
             } else {
-                result += "0";
+                result +="0";
             }
         }
     }
