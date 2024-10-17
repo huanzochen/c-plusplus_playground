@@ -22,7 +22,7 @@ public:
   }
 
   // constructor
-  Info(string &addr, int graduateTime)
+  Info(string addr, int graduateTime)
   {
     this->address = addr;
     this->graduateTime = graduateTime;
@@ -83,6 +83,83 @@ public:
 class Validator
 {
 public:
-  virtual ~Validator() = default;
-  virtual bool validate(const Person &candidate) const = 0; // Pure virtual function
+  virtual bool validate(const Person &candidate) = 0; // Pure virtual function
 };
+
+class NewGradValidator : public Validator
+{
+  virtual bool validate(const Person &candidate) override
+  {
+    bool isValid = true;
+
+    // Check if address is set
+    if (candidate.personalInfo.address.empty())
+    {
+      cout << "Address is missing";
+      isValid = false;
+    }
+
+    // Check graduate time for new grads
+    int currentDate = 202301;
+    int graduateTime = candidate.personalInfo.graduateTime;
+    if (!(graduateTime >= currentDate - 6 && graduateTime <= currentDate + 12))
+    {
+      cout << "Graduate is outside of 6 to 12 months range.";
+      isValid = false;
+    }
+
+    return isValid;
+  }
+};
+
+class ExecutiveReferralValidator : public Validator
+{
+public:
+  virtual bool validate(const Person &candidate) override
+  {
+    if (candidate.isExecutiveReferral && !candidate.isReferral)
+    {
+      cout << "Executuve referral should also be reffereal.";
+      return false;
+    }
+    return true;
+  }
+};
+
+void validateCandidate(const Person &candidate, vector<Validator *> &validators)
+{
+  bool allValid = true;
+  for (auto &validator : validators)
+  {
+    if (!validator->validate(candidate))
+    {
+      allValid = false;
+    }
+  }
+
+  if (allValid)
+  {
+    cout << "Cadidate passed all validations";
+  }
+  else
+  {
+    cout << "Cadidate failed one or more validations";
+  }
+}
+
+int main()
+{
+  Info testInfo("123 Test St, Test City", 202305); // e.g // graduate time in year
+
+  Qualification qual1("Q001", "Computer Science Degree", 2022);
+  Qualification qual2("Q002", "AWS Certification", 2023);
+  vector<Qualification> qualifications = {qual1, qual2};
+
+  Person candidate(testInfo, qualifications, true, false);
+
+  vector<Validator *> validators;
+  validators.push_back(new NewGradValidator());
+  validators.push_back(new ExecutiveReferralValidator());
+
+  validateCandidate(candidate, validators);
+}
