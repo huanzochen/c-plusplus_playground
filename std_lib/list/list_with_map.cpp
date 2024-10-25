@@ -3,12 +3,14 @@
 
 using namespace std;
 
-class Solution{
-  public:
+class Solution
+{
+public:
   list<int> dl;
-  unordered_map<int,list<int>::iterator> nodeMap;
+  unordered_map<int, list<int>::iterator> nodeMap;
 
-  Solution(){
+  Solution()
+  {
 
     dl.push_back(10);
     nodeMap[10] = prev(dl.end());
@@ -25,9 +27,11 @@ class Solution{
     printList();
   }
 
-  bool deleteKeyWith(int key){
-    if(nodeMap.count(key) == 0) {
-      cout <<  "no exist key" << endl;
+  bool deleteKeyWith(int key)
+  {
+    if (nodeMap.count(key) == 0)
+    {
+      cout << "no exist key" << endl;
       return false;
     }
 
@@ -37,15 +41,18 @@ class Solution{
     // erase from map through value.
     nodeMap.erase(key);
 
-    cout << "erase done." << endl;;
+    cout << "erase done." << endl;
+    ;
     printList();
     return true;
   }
 
-  bool deleteKeyWithSearchingIterator(int key){
+  bool deleteKeyWithSearchingIterator(int key)
+  {
     unordered_map<int, list<int>::iterator>::iterator it = nodeMap.find(key);
-    if(nodeMap.find(key) == nodeMap.end()){
-      cout << "not found." << endl;;
+    if (nodeMap.find(key) == nodeMap.end())
+    {
+      cout << "not found." << endl;
       return false;
     }
 
@@ -57,28 +64,32 @@ class Solution{
     return true;
   }
 
-  int getValueWithKey(int key){
-    if(nodeMap.count(key) == 0) return -1;
+  int getValueWithKey(int key)
+  {
+    if (nodeMap.count(key) == 0)
+      return -1;
 
     return *nodeMap[key];
   }
 
-  void printList(){
+  void printList()
+  {
     cout << "list: ";
-    for(auto cur: dl){
+    for (auto cur : dl)
+    {
       cout << cur << " ";
     }
     cout << endl;
   }
 };
 
-int main() {
+int main()
+{
   Solution sol;
   sol.deleteKeyWith(10);
   sol.deleteKeyWithSearchingIterator(10);
   sol.deleteKeyWithSearchingIterator(20);
   sol.deleteKeyWithSearchingIterator(35);
 
-  cout << "getValueWithKey(30): " << sol.getValueWithKey(30) << endl;;
-
+  cout << "getValueWithKey(30): " << sol.getValueWithKey(30) << endl;
 }

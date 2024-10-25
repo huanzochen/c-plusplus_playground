@@ -60,8 +60,24 @@ int main()
   printAll(&seen);
   printAll(&company);
 
-  unordered_set<int> lotto_6_number{2,3,5,45,21,12};
+  unordered_set<int> lotto_6_number{2, 3, 5, 45, 21, 12};
 
   // This line is not ok due to the type is not same.
   // lotto_6_number.swap(seen);
+
+  // iterate through value
+  cout << "lotto_6_number: ";
+  for (int cur : lotto_6_number)
+  {
+    cout << cur << " ";
+  }
+  cout << endl;
+
+  // iteratr through iterator
+  cout << "lotto_6_number: ";
+  for (unordered_set<int>::iterator it = lotto_6_number.begin(); it != lotto_6_number.end(); it++)
+  {
+    cout << *it << " ";
+  }
+  cout << endl;
 }
