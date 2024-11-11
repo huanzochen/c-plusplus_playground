@@ -84,7 +84,8 @@
     "stop_token": "cpp",
     "__tree": "cpp",
     "deque": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "list": "cpp"
   },
   "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
