@@ -1,14 +1,24 @@
 /**
  *
-A vector array that is a gold chain with it’s weight.
-
-example like [6, 6, 10, 12].
-
-You must remove an element, and let the seperate 2 parts has the same weight.
-the sequence of element can't be rearranged.
-
-return is this is able to seperate.
+ *
+  You and your friend went to a party and get a goldchain,
+  the goldchain has it's weight as a integer in each link,
+  you guys wanted to seperate it to two part with the same weight and bring it home.
+  please write a function determine if it can be seperated.
  */
+
+/**
+ *
+ *
+  You must remove an element, and let the seperate 2 parts has the same weight.
+  the sequence of element can't be rearranged.
+
+  return is this is able to seperate.
+ */
+
+// A vector array that is a gold chain with it’s weight.
+
+// example like [6, 6, 10, 12].
 
 #include <iostream>
 #include <vector>
@@ -77,3 +87,11 @@ int main()
     cout << canSeperate(goldChain) << endl;
   }
 }
+
+/**
+ You and your friend went to a party and get a goldchain,
+  the goldchain has it's weight as a integer in each link,
+  you guys wanted to seperate it to two part with the same weight and bring it home.
+  But before that you must remove a link from the goldchain.
+  please write a function determine if it can be seperated.
+*/
