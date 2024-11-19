@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include <cfloat>
 #include <utility>
 
 using namespace std;
@@ -19,13 +20,23 @@ int main () {
     points.push_back({x, y});
   }
 
+  double minDiff = DBL_MAX;
+  pair<double, double> minDiffCoord;
   for(int i = 0; i < points.size() ;i++){
-    printf("(%f, %f)", points[i].first, points[i].second);
+    double x = points[i].first, y = points[i].second;
+    printf("(%f, %f)",x, y);
     if(i != points.size()-1) {
       cout << endl;
+    }
+
+    double diff = abs(x - y);
+    if(minDiff > diff){
+      minDiff = diff;
+      minDiffCoord = {x, y};
     }
   }
   cout << endl;
 
+  printf("minDiffCoord = (%f, %f) \n", minDiffCoord.first, minDiffCoord.second);
   return 0;
 }
